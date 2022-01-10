@@ -12,60 +12,81 @@ void sign_out(string user);
 void sign_in(string user);
 
 int main() {
-    string username;
-    string password;
-    cout<<"Enter username:"<< endl;
-    cin>>username;
-    cout<<"Enter password:"<< endl;
-    cin>>password;
-    //Login verification
-    string user_info[100][100];
+    bool access = false;
+    while (!access){
 
-    ifstream users ( "Users/users.txt" );
+        string username;
+        string password;
+        cout<<"Enter username:"<< endl;
+        cin>>username;
+        cout<<"Enter password:"<< endl;
+        cin>>password;
+        //Login verification
+        string user_info[100][100];
 
-    if (!users)
-    {
-        cout << "There was an error opening the file.\n";
-        return 0;
-    }
-    else{
-        string line;
-        int row = 0;
-        int col = 0;
+        ifstream users ( "Users/users.txt" );
 
-        if (users.is_open())
+        if (!users)
         {
-
-            while ( getline (users,line) ){
-                    int i=0;
-                    while (line[i] != ':'){
-                        string word = user_info[row][col];
-                        word= word + line[i];
-                        user_info[row][col]=word ;
-                        i = i+1;
-                        if (line[i] == ':'){
-                            
-                            col++;
-                            i++;
-                            
-                        }
-                        if (line[i] == '#'){
-                            row++;
-                            col=0;
-                            break;
-                        }
-                    }
-                        
-                }
-           for(int i=0;i<3;i++){
-                for(int j=0;j<3;j++){
-                    cout<<"\t"<<user_info[i][j];
-                    }
-                cout<<endl;
-            }
-            users.close();
+            cout << "There was an error opening the file.\n";
+            return 0;
         }
+        else{
+            string line;
+            int row = 0;
+            int col = 0;
 
+            if (users.is_open())
+            {
+
+                while ( getline (users,line) ){
+                        int i=0;
+                        while (line[i] != ':'){
+                            string word = user_info[row][col];
+                            word= word + line[i];
+                            user_info[row][col]=word ;
+                            i = i+1;
+                            if (line[i] == ':'){
+                                
+                                col++;
+                                i++;
+                                
+                            }
+                            if (line[i] == '#'){
+                                row++;
+                                col=0;
+                                break;
+                            }
+                        }
+                            
+                    }
+                    users.close();
+            }
+            bool found;
+            string comp_pass;
+            string balance;
+            for(int i=0;i<100;i++){
+                
+                if(user_info[i][0] == username){
+                    comp_pass = user_info[i][1];
+                    balance = user_info[i][2];
+                    found = true;
+                    break;
+                    }
+                }
+            if (found == false){
+                cout<<"Username not found!"<<endl;
+                access = false;
+            }else if(comp_pass != password){
+                cout<<"Password wrong!"<<endl;
+                access = false;
+            }else{
+                access = true;
+            }
+            
+                
+            
+
+        }
     }
-    return 0;
 }
