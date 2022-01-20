@@ -7,13 +7,6 @@
 
 using namespace std ;
 
-
-int check_balance(string user);
-void add_balance(string user);
-void remove_balance(string user);
-void sign_out(string user);
-void sign_in(string user);
-
 int main() {
     bool access = false;
     while (!access){
