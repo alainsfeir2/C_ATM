@@ -82,10 +82,7 @@ int main() {
                 access = false;
             }else{
                 access = true;
-            }
-            
-                
-            
+            }   
 
         }
     }
