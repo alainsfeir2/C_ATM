@@ -3,8 +3,15 @@
 #include <fstream>
 
 using namespace std ;
+struct user_data {
+            string username;
+            string password;
+            float balance;
+            bool access = false;
+        };
 
-bool sign_in(bool access){
+struct user_data sign_in(struct user_data user_1){
+        
         string username;
         string password;
         cout<<"Enter username:"<< endl;
@@ -19,7 +26,7 @@ bool sign_in(bool access){
         if (!users)
         {
             cout << "There was an error opening the file.\n";
-            return 0;
+            return user_1;
         }
         else{
             string line;
@@ -64,14 +71,22 @@ bool sign_in(bool access){
                     break;
                     }
                 }
+            user_1.balance = stof(balance);
+            user_1.password = comp_pass;
+            user_1.username = username;
+            user_1.access = found ;
+
             if (found == false){
                 cout<<"Username not found!"<<endl;
-                return access = false;
+                user_1.access = false;
+                return user_1;
             }else if(comp_pass != password){
                 cout<<"Password wrong!"<<endl;
-                return access = false;
+                user_1.access = false;
+                return user_1;
             }else{
-                return access = true;
+                user_1.access = true;
+                return user_1;
             }   
 
         }
